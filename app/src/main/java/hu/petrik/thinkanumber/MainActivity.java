@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPlussz;
     private Button btnMinusz;
     private Button btnTipp;
+    private ImageView hp5;
     private ImageView hp4;
     private ImageView hp3;
     private ImageView hp2;
@@ -30,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private int elet;
     private AlertDialog.Builder jatekVegeDialogBuilder;
     private Button btnkonnyu;
-    private  Button btnNehez;
+    private Button btnNehez;
     private AlertDialog.Builder nehezsegDialogBuilder;
-
+    private int gondoltmax;
+    /**
+     * A játék nehézsége false -> könnyű; true -> nehéz
+     */
+    private boolean nehezseg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +89,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnkonnyu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nehezseg = false;
+                ujJatek();
+            }
+        });
+
+        btnNehez.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nehezseg){
+                nehezsegDialogBuilder.create().show();
+                nehezsegDialogBuilder.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        nehezseg = true;
+                        ujJatek();
+                    }}
+                });
+
+            }
+        });
     }
 
     private void eletCsokkent() {
@@ -127,12 +156,13 @@ public class MainActivity extends AppCompatActivity {
         hp2 = findViewById(R.id.hp2);
         hp3 = findViewById(R.id.hp3);
         hp4 = findViewById(R.id.hp4);
+        hp5 = findViewById(R.id.hp5);
         tippErtek = findViewById(R.id.tippErteke);
         rnd = new Random();
         gondolt = rnd.nextInt(10) + 1;
         tipp = 1;
         elet = 4;
-        eletek = new ImageView[]{hp1, hp2, hp3, hp4};
+        eletek = new ImageView[]{hp1, hp2, hp3, hp4, hp5};
         Log.d("gondolt", String.valueOf(gondolt));
         jatekVegeDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         jatekVegeDialogBuilder.setMessage("Szeretne új játékot játszani?");
@@ -149,17 +179,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         jatekVegeDialogBuilder.setCancelable(false);
+        nehezsegDialogBuilder = new AlertDialog.Builder(this);
+        nehezsegDialogBuilder.setCancelable(false);
+        nehezsegDialogBuilder.setTitle("Nehézség váltása");
+        nehezsegDialogBuilder.setMessage("Biztosan nehézséget akarsz váltani?");
+        nehezseg = false;
+        nehezsegDialogBuilder.setNegativeButton("Nem", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
         ujJatek();
     }
 
     private void ujJatek() {
         gondolt = rnd.nextInt(10) + 1;
         tipp = 1;
-        elet = 4;
+        elet = 3;
+        gondoltmax = 10;
+        if (nehezseg) {
+            gondoltmax = 40;
+            elet = 5;
+            hp4.setVisibility(View.VISIBLE);
+            hp5.setVisibility(View.VISIBLE);
+        } else {
+            hp4.setVisibility(View.GONE);
+            hp5.setVisibility(View.GONE);
+        }
         eletek = new ImageView[]{hp1, hp2, hp3, hp4};
         Log.d("gondolt", String.valueOf(gondolt));
         tippErtek.setText(String.valueOf(tipp));
-        for(ImageView iv : eletek){
+        for (ImageView iv : eletek) {
             iv.setImageResource(R.drawable.heart2);
         }
     }
