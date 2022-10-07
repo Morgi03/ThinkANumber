@@ -6,12 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Könnyű"
+                android:layout_weight="1"
+                android:id="@+id/btnKonnyu"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nehéz"
+                android:layout_weight="1"
+                android:id="@+id/btnNehez"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -36,7 +53,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/heart2" />
-
+            <ImageView
+                android:id="@+id/hp5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/heart2" />
         </LinearLayout>
 
         <TextView
@@ -45,27 +66,29 @@
             android:text="Gondoltam egy számra!"
             android:textSize="30sp"
             />
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPlussz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="+"
+            android:background="@drawable/buttonbackround"/>
 
         <TextView
             android:id="@+id/tippErteke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnminusz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="-"
+            android:background="@drawable/buttonbackround"/>
+
 
     </LinearLayout>
-
     <Button
         android:id="@+id/btnTipp"
         android:layout_width="match_parent"
